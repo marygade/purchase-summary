@@ -1,4 +1,4 @@
-import product from "./product";
+import product from "../../src/reducers/product";
 
 describe("todos reducer", () => {
   it("should return the default discount", () => {

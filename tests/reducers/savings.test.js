@@ -1,4 +1,4 @@
-import savings from "./savings";
+import savings from "../../src/reducers/savings";
 
 
 describe("todos reducer", () => {

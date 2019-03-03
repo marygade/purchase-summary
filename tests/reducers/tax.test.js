@@ -1,4 +1,4 @@
-import tax from "./tax";
+import tax from "../../src/reducers/tax";
 
 describe("todos reducer", () => {
   it("should return the default discount", () => {
