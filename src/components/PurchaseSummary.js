@@ -11,7 +11,12 @@ class PurchaseSummary extends React.Component {
   }
 
   render() {
-    const { product, savings, tax, discount } = this.props;
+    const product = this.props.product;
+    const savings = this.props.savings;
+    const tax = this.props.tax;
+    const promo = this.props.promo;
+    const discount = promo.discount;
+
     const discountedPrice = discount ? (product.price * discount / 100) : null;
     const totalPrice = (product.price + tax - savings - discountedPrice);
     return (

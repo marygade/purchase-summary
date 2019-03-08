@@ -2,47 +2,65 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+
+import { handleChange } from "../actions/promoCode";
+import { handleSubmit } from "../actions/promoCodeApply";
+
 class ApplyPromo extends Component {
-  constructor() {
-    super();
-    this.state = {
-      promoCode: ""
-    };
+  constructor(props) {
+    super(props);
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleSubmit() {
-    if (!this.state.promoCode) {
+
+  handleChange(e) {
+    this.props.handleChange(e);
+  }
+
+  handleSubmit (e) {
+    this.props.handleSubmit(e);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!this.props.promoCode) {
       alert("Promo code is required!");
       return;
     }
-    if (this.state.promoCode.toUpperCase() !== "DISCOUNT") {
-      alert("Invalid Promo code. Please try again!");
+
+    if (!this.props.isPromoCodeValid) {
+      alert("Wrong promo code! Please try again!");
       return;
     }
-    this.props.applyDiscount();
+
+    if (this.props.isPromoCodeValid) {
+      alert("Promo code applied successfully!");
+      return;
+    }
   }
+
   render() {
-    const { promoCode } = this.state;
     return (
       <div className="promo-expander">
         <input
-          value={promoCode}
-          onChange={e => this.setState({ promoCode: e.target.value })}
+          value={this.props.promoCode}
+          onChange={e => this.handleChange(e)}
         />
-        <a onClick={() => this.handleSubmit()}>Apply</a>
+        <a onClick={(e) => this.handleSubmit(e)}>Apply</a>
       </div>
     );
   }
 }
 
 ApplyPromo.propTypes = {
-  applyDiscount: PropTypes.func.isRequired
+  handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = dispatch => ({
-  applyDiscount: () => dispatch({ type: "DISCOUNT" })
-});
+const mapStateToProps = state => state.promo;
+const mapDispatchToProps = {handleChange, handleSubmit};
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ApplyPromo);
