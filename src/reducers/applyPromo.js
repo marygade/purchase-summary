@@ -6,6 +6,7 @@ const MOCK_PROMO_CODE = "DISCOUNT";
 const initialState = {
   discount : 0,
   promoCode : "",
+  isPromoCodeApplied : false,
   isPromoCodeValid : false
 };
 
@@ -14,13 +15,15 @@ export default function promo(state = initialState, action) {
     case PROMO_CODE:
       return {
         ...state,
-        promoCode : action.payload
+        promoCode : action.payload,
+        isPromoCodeApplied : false
       };
     case APPLY_PROMO_CODE:
       return {
         ...state,
         discount : state.promoCode.toUpperCase() === MOCK_PROMO_CODE ? MOCK_DISCOUNT_VAL : 0,
-        isPromoCodeValid : state.promoCode === MOCK_PROMO_CODE ? true : false,
+        isPromoCodeValid : state.promoCode.toUpperCase() === MOCK_PROMO_CODE ? true : false,
+        isPromoCodeApplied : true
       };
     default:
       return state;

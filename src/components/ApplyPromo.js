@@ -22,18 +22,18 @@ class ApplyPromo extends Component {
     this.props.handleSubmit(e);
   }
 
-  componentDidUpdate(prevProps) {
-    if (!this.props.promoCode) {
+  componentDidUpdate() {
+    if (this.props.isPromoCodeApplied && (this.props.promoCode === ""))  {
       alert("Promo code is required!");
       return;
     }
 
-    if (!this.props.isPromoCodeValid) {
+    if (this.props.isPromoCodeApplied && !this.props.isPromoCodeValid) {
       alert("Wrong promo code! Please try again!");
       return;
     }
 
-    if (this.props.isPromoCodeValid) {
+    if (this.props.isPromoCodeApplied && this.props.isPromoCodeValid) {
       alert("Promo code applied successfully!");
       return;
     }
